@@ -24,4 +24,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix("threads")->group(function () {
     Route::get("/" , [\App\Http\Controllers\ThreadController::class , 'index']);
     Route::get("/{thread}" , [\App\Http\Controllers\ThreadController::class , 'show']);
+    Route::post("/{thread}/replies" , [\App\Http\Controllers\ReplyController::class , 'store'])->middleware("auth");
 });

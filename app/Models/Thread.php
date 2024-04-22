@@ -24,4 +24,9 @@ class Thread extends Model
     {
         return 'threads/' . $this->id;
     }
+
+    public function addReply($values)
+    {
+        return Reply::create($values);
+    }
 }
