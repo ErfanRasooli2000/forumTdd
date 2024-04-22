@@ -20,3 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix("threads")->group(function () {
+    Route::get("/" , [\App\Http\Controllers\ThreadController::class , 'index']);
+    Route::get("/{thread}" , [\App\Http\Controllers\ThreadController::class , 'show']);
+});

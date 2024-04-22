@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ReplyFactory extends Factory
 {
+    protected $model = Reply::class;
     /**
      * Define the model's default state.
      *
