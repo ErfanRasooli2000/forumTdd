@@ -48,12 +48,12 @@ class ReplayTest extends TestCase
      */
     public function a_unauthenticated_user_cant_add_reply()
     {
-        $this->expectException(AuthenticationException::class);
+//        $this->expectException(AuthenticationException::class);
 
         $thread = Thread::factory()->create();
         $reply = Reply::factory()->make()->toArray();
 
-        $this->post('/threads/'.$thread->id.'/replies',$reply);
+        $this->post('/threads/'.$thread->id.'/replies',$reply)->assertRedirectToRoute("login");
     }
 
 }
