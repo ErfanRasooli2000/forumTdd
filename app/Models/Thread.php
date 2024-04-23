@@ -29,4 +29,9 @@ class Thread extends Model
     {
         return Reply::create($values);
     }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class , 'user_id');
+    }
 }

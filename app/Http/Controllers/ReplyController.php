@@ -14,5 +14,7 @@ class ReplyController extends Controller
         $data["user_id"] = \Auth::id();
 
         $thread->addReply($data);
+
+        return redirect()->route('thread.show' , ['thread' => $thread]);
     }
 }

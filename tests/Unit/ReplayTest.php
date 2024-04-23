@@ -34,10 +34,13 @@ class ReplayTest extends TestCase
         $this->actingAs($user);
 
         $thread = Thread::factory()->create();
-        $reply = Reply::factory()->make()->toArray();
+        $reply = Reply::factory()->raw();
 
-        $response = $this->post('/threads/'.$thread->id.'/replies',$reply);
-        $response->assertStatus(200);
+        $this->post('/threads/'.$thread->id.'/replies',$reply)
+            ->assertRedirectToRoute('thread.show' , ['thread' => $thread]);
+
+        $this->get(route("thread.show" , ['thread' => $thread]))
+            ->assertSee($reply["body"]);
 
         $this->assertCount(1,$thread->replies);
     }
@@ -48,12 +51,11 @@ class ReplayTest extends TestCase
      */
     public function a_unauthenticated_user_cant_add_reply()
     {
-//        $this->expectException(AuthenticationException::class);
-
         $thread = Thread::factory()->create();
-        $reply = Reply::factory()->make()->toArray();
+        $reply = Reply::factory()->raw();
 
-        $this->post('/threads/'.$thread->id.'/replies',$reply)->assertRedirectToRoute("login");
+        $this->post('/threads/'.$thread->id.'/replies',$reply)
+            ->assertRedirectToRoute("login");
     }
 
 }

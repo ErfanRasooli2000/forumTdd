@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -34,10 +35,19 @@ class ThreadTest extends TestCase
      */
     public function it_can_add_reply()
     {
-        $reply = Reply::factory()->for($this->thread)->make()->toArray();
+        $reply = Reply::factory()->for($this->thread)->raw();
 
         $this->thread->addReply($reply);
 
         $this->assertCount(1,$this->thread->replies);
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_has_a_creator()
+    {
+        $this->assertInstanceOf(User::class,$this->thread->creator);
     }
 }

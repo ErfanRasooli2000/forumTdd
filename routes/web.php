@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\ThreadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,10 +22,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::prefix("threads")->group(function () {
-    Route::get("/" , [\App\Http\Controllers\ThreadController::class , 'index']);
-    Route::get("/{thread}" , [\App\Http\Controllers\ThreadController::class , 'show']);
-    Route::post("/{thread}/replies" , [\App\Http\Controllers\ReplyController::class , 'store'])->middleware("auth");
+    Route::get("/" , [ThreadController::class , 'index'])->name('thread.all');
+    Route::get("/{thread}" , [ThreadController::class , 'show'])->name('thread.show');
+    Route::post("/{thread}/replies" , [ReplyController::class , 'store'])->middleware("auth");
+    Route::post("/create" , [ThreadController::class , 'create'])->middleware("auth");
 });
