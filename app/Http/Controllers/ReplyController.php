@@ -15,6 +15,6 @@ class ReplyController extends Controller
 
         $thread->addReply($data);
 
-        return redirect()->route('thread.show' , ['thread' => $thread]);
+        return redirect()->route('thread.show' , ['thread' => $thread , 'chanel' => $thread->chanel]);
     }
 }

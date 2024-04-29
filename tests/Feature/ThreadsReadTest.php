@@ -34,7 +34,7 @@ class ThreadsReadTest extends TestCase
      */
     public function a_user_can_see_single_thread()
     {
-        $response = $this->get("/threads/" . $this->thread->id);
+        $response = $this->get($this->thread->path());
         $response->assertStatus(200);
         $response->assertSee($this->thread->title);
     }
@@ -46,7 +46,7 @@ class ThreadsReadTest extends TestCase
     public function a_user_can_see_replies_of_thread()
     {
         $replay = Reply::factory()->for($this->thread)->create();
-        $response = $this->get("/threads/" . $this->thread->id);
+        $response = $this->get($this->thread->path());
         $response->assertSee($replay->body);
     }
 
@@ -57,7 +57,7 @@ class ThreadsReadTest extends TestCase
     public function a_user_can_see_reply_owner_name()
     {
         $replay = Reply::factory()->for($this->thread)->create();
-        $response = $this->get("/threads/" . $this->thread->id);
+        $response = $this->get($this->thread->path());
         $response->assertSee($replay->owner->name);
     }
 }

@@ -38,9 +38,9 @@ class ReplayTest extends TestCase
         $reply = Reply::factory()->raw();
 
         $this->post('/threads/'.$thread->id.'/replies',$reply)
-            ->assertRedirectToRoute('thread.show' , ['thread' => $thread]);
+            ->assertRedirectToRoute('thread.show' , ['thread' => $thread , 'chanel' => $thread->chanel]);
 
-        $this->get(route("thread.show" , ['thread' => $thread]))
+        $this->get($thread->path())
             ->assertSee($reply["body"]);
 
         $this->assertCount(1,$thread->replies);

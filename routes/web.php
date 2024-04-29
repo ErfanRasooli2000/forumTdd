@@ -26,7 +26,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::prefix("threads")->group(function () {
     Route::get("/" , [ThreadController::class , 'index'])->name('thread.all');
-    Route::get("/{thread}" , [ThreadController::class , 'show'])->name('thread.show');
+    Route::get("/{chanel:slug}/{thread}" , [ThreadController::class , 'show'])->name('thread.show');
     Route::post("/{thread}/replies" , [ReplyController::class , 'store'])->middleware("auth");
     Route::post("/create" , [ThreadController::class , 'create'])->middleware("auth");
 });
