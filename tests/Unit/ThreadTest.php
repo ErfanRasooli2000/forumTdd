@@ -2,15 +2,17 @@
 
 namespace Tests\Unit;
 
+use App\Models\Chanel;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     protected function setUp(): void
     {
@@ -49,5 +51,26 @@ class ThreadTest extends TestCase
     public function it_has_a_creator()
     {
         $this->assertInstanceOf(User::class,$this->thread->creator);
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_belongs_to_a_chanel()
+    {
+        $this->assertInstanceOf(Chanel::class , $this->thread->chanel);
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_can_create_a_path()
+    {
+        $this->assertEquals(
+            "threads/{$this->thread->chanel->slug}/{$this->thread->id}",
+            $this->thread->path()
+        );
     }
 }

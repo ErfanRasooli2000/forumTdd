@@ -24,6 +24,7 @@ class ThreadCreateRequest extends FormRequest
         return [
             'title' => "required|string",
             "body" => "required|string",
+            "chanel_id" => "required|exists:chanels,id"
         ];
     }
 }

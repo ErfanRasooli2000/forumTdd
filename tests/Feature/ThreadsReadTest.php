@@ -4,12 +4,13 @@ namespace Tests\Feature;
 
 use App\Models\Reply;
 use App\Models\Thread;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class ThreadsReadTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     protected function setUp(): void
     {

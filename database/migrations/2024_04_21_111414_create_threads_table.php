@@ -16,9 +16,11 @@ return new class extends Migration
             $table->string("title");
             $table->text("body");
             $table->unsignedBigInteger("user_id");
+            $table->unsignedBigInteger("chanel_id");
             $table->timestamps();
 
             $table->foreign("user_id")->references("id")->on("users");
+            $table->foreign("chanel_id")->references("id")->on("chanels");
         });
     }
 
