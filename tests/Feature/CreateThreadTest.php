@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class CreateThreadTest extends TestCase
@@ -45,5 +44,45 @@ class CreateThreadTest extends TestCase
             ->assertRedirectToRoute('login');
     }
 
+    public function publishThread($replaces = [])
+    {
+        $thread = Thread::factory()->raw($replaces);
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
+        return $this->post(route('thread.create'), $thread);
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_requires_valid_title()
+    {
+        $this->publishThread(['title' => null])
+            ->assertSessionHasErrors();
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_requires_valid_body()
+    {
+        $this->publishThread(['body' => null])
+            ->assertSessionHasErrors();
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_requires_valid_chanel()
+    {
+        $this->publishThread(['chanel_id' => null])
+            ->assertSessionHasErrors();
+
+        $this->publishThread(['chanel_id' => 999])
+            ->assertSessionHasErrors();
+    }
 }
